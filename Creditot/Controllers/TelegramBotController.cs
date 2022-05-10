@@ -1,5 +1,6 @@
 ﻿using Creditot.Domain;
 using Creditot.Domain.Entities;
+using Creditot.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Telegram.Bot;
@@ -11,38 +12,30 @@ namespace Creditot.Controllers
     [Route("api/message/update")]
     public class TelegramBotController:Controller
     {
-        private readonly TelegramBotClient _telegramBotClient;
-        private readonly DataContext _context;
-        public TelegramBotController(TelegramBot telegramBot, DataContext context)
+        private readonly ICommandExecutor _commandExecutor;
+        public TelegramBotController(ICommandExecutor commandExecutor)
         {
-            _context = context;
-            _telegramBotClient = telegramBot.GetBot().Result;
-            Console.WriteLine(_telegramBotClient is null); 
+          _commandExecutor=commandExecutor; 
         }
 
         [HttpPost]
-        //public async Task<IActionResult> Update([FromBody] object update)
-        public async Task<IActionResult> Update(Update update)
+        public async Task<IActionResult> Update([FromBody] object update)
+        //public async Task<IActionResult> Update(Update update)
         {
             Console.WriteLine("OOOOPPPPssss");
-            //var upd = JsonConvert.DeserializeObject<Update>(update.ToString());
-            //var chat = upd.Message?.Chat;
-            var chat = update.Message.Chat;
-            if (chat == null)
+            var upd = JsonConvert.DeserializeObject<Update>(update.ToString());
+
+            if (upd?.Message?.Text is null && upd?.CallbackQuery is null)
+                return Ok();
+
+            try
+            {
+               await _commandExecutor.Execute(upd);
+            }
+            catch (Exception ex)
             {
                 return Ok();
             }
-            Console.WriteLine(chat);
-            var appUser = new AppUser
-            {
-                Username = chat.Username,
-                ChatId = chat.Id
-            };
-
-            await _context.Users.AddAsync(appUser);
-            await _context.SaveChangesAsync();
-
-            await _telegramBotClient.SendTextMessageAsync(chat.Id, "You've been registered");
             return Ok();
         }
     }

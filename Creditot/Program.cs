@@ -1,9 +1,12 @@
 using Creditot;
+using Creditot.Commands;
 using Creditot.Domain;
+using Creditot.Services;
 using Microsoft.EntityFrameworkCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
+IServiceProvider serviceProvider=null;
 
 // Add services to the container.
 
@@ -13,8 +16,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 string connection = builder.Configuration.GetConnectionString("Db");
-builder.Services.AddDbContext<DataContext>(options=>options.UseSqlServer(connection));
+builder.Services.AddDbContext<DataContext>(options=>options.UseNpgsql(connection));
 builder.Services.AddSingleton<TelegramBot>();
+builder.Services.AddScoped<ICommandExecutor, CommandExecutor>();
+builder.Services.AddScoped<IUserService,UserService>();
+builder.Services.AddScoped<BaseCommand, StartCommand>();
+builder.Services.AddScoped<BaseCommand, GetCategoriesCommand>();
+builder.Services.AddScoped<KeyboardBase, CategoriesKeyboard>();
+builder.Services.AddScoped<BaseCommand, AddCategoryCommand>();
 
 var app = builder.Build();
 
@@ -24,7 +33,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+//serviceProvider.GetRequiredService<TelegramBot>().GetBot().Wait();
 app.UseRouting();
 
 app.UseHttpsRedirection();
