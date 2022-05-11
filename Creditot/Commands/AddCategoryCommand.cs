@@ -20,9 +20,9 @@ namespace Creditot.Commands
         public override async Task ExecuteAsync(Update update)
         {
             var user = await _userService.GetOrCreate(update);
-
+            Console.WriteLine(Name);
             string text = "Введите название категории:";
-            await _telegramBotClient.SendTextMessageAsync(user.ChatId, text);
+            await _telegramBotClient.SendTextMessageAsync(update.CallbackQuery.Message.Chat.Id, text);
 
 
         }

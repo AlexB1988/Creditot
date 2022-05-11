@@ -24,6 +24,7 @@ builder.Services.AddScoped<BaseCommand, StartCommand>();
 builder.Services.AddScoped<BaseCommand, GetCategoriesCommand>();
 builder.Services.AddScoped<KeyboardBase, CategoriesKeyboard>();
 builder.Services.AddScoped<BaseCommand, AddCategoryCommand>();
+builder.Services.AddScoped<BaseCommand, NewCategoryCommand>();
 
 var app = builder.Build();
 

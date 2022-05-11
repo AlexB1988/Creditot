@@ -10,6 +10,7 @@ namespace Creditot.Domain.Entities
     {
         public long Id { get; set; }
         public string Name { get; set; }
+        public bool IsDefault { get; set; }= false;
         public List<Users> Users = new();
         public List<UsersCategories> UsersCategories { get; set; } = new();
     }

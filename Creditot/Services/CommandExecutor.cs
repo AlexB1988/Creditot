@@ -20,11 +20,12 @@ namespace Creditot.Services
                 Console.WriteLine("Callback");
                 switch (update.CallbackQuery.Data)
                 {
+                    case CommandNames.AddCategoryCommand:
+                        await ExecuteCommand(CommandNames.AddCategoryCommand, update);
+                        return;
+
                     case CommandNames.GetCategoriesCommand:
                         await ExecuteCommand(CommandNames.GetCategoriesCommand, update);
-                        return;
-                    case CommandNames.AddCategoryCommand:
-                        await ExecuteCommand(CommandNames.AddCategoryCommand,update);
                         return;
                 }
             }
@@ -36,6 +37,15 @@ namespace Creditot.Services
                 return;
             }
 
+            switch (_lastCommand?.Name)
+            {
+                case CommandNames.AddCategoryCommand:
+                    {
+                        Console.WriteLine("FSM");
+                        await ExecuteCommand(CommandNames.NewCategoryCommand, update);
+                        break;
+                    }
+            }
         }
         private async Task ExecuteCommand(string commandName, Update update)
         {
