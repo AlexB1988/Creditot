@@ -25,6 +25,7 @@ builder.Services.AddScoped<BaseCommand, GetCategoriesCommand>();
 builder.Services.AddScoped<KeyboardBase, CategoriesKeyboard>();
 builder.Services.AddScoped<BaseCommand, AddCategoryCommand>();
 builder.Services.AddScoped<BaseCommand, NewCategoryCommand>();
+builder.Services.AddScoped<BaseCommand, AddCategoryCreditCommand>();
 
 var app = builder.Build();
 

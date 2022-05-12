@@ -27,6 +27,9 @@ namespace Creditot.Services
                     case CommandNames.GetCategoriesCommand:
                         await ExecuteCommand(CommandNames.GetCategoriesCommand, update);
                         return;
+                    default:
+                        await ExecuteCommand(CommandNames.AddCategoryCreditCommand, update);
+                        return;
                 }
             }
 
@@ -36,16 +39,20 @@ namespace Creditot.Services
                 await ExecuteCommand(CommandNames.StartCommand, update);
                 return;
             }
-
-            switch (_lastCommand?.Name)
-            {
-                case CommandNames.AddCategoryCommand:
-                    {
-                        Console.WriteLine("FSM");
-                        await ExecuteCommand(CommandNames.NewCategoryCommand, update);
-                        break;
-                    }
+            if (_lastCommand?.Name is null)                                    //Не забыть потом переписать, 
+            {                                                                  //_lastCommand пустой
+                Console.WriteLine("NewCategory");
+                await ExecuteCommand(CommandNames.NewCategoryCommand, update);
             }
+            //switch (_lastCommand?.Name)
+            //{
+            //    case CommandNames.AddCategoryCommand:
+            //        {
+            //            Console.WriteLine("FSM");
+            //            await ExecuteCommand(CommandNames.NewCategoryCommand, update);
+            //            break;
+            //        }
+            //}
         }
         private async Task ExecuteCommand(string commandName, Update update)
         {

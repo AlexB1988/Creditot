@@ -14,12 +14,11 @@ namespace Creditot.Commands
         private readonly TelegramBotClient _telegramBotClient;
         public NewCategoryCommand(IUserService userService, DataContext dataContext, TelegramBot telegramBot)
         {
-            Console.WriteLine("Class NewCat");
             _userService = userService;
             _dataContext=dataContext;
             _telegramBotClient = telegramBot.GetBot().Result;
         }
-        public override string Name => CommandNames.AddCategoryCommand;
+        public override string Name => CommandNames.NewCategoryCommand;
         public override async Task ExecuteAsync(Update update)
         {
             Console.WriteLine("Method NewCat");

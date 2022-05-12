@@ -25,7 +25,7 @@ namespace Creditot.Commands
             InlineKeyboardMarkup inlineKeyboard = new(
             new[]
                 {
-                _keyboard.GetKeyboard()
+                _keyboard.GetKeyboard(user)        //Не забыть переделать, клавиатура горизонтальная (нужно вертикальную)
                 }) ;
             string text = "Здесь Вы можете выбрать категорию\n" +
                           "своего расхода. Просто нажмите\n" +
