@@ -27,6 +27,9 @@ namespace Creditot.Services
                     case CommandNames.GetCategoriesCommand:
                         await ExecuteCommand(CommandNames.GetCategoriesCommand, update);
                         return;
+                    case CommandNames.GetDayRangeCommand:
+                        await ExecuteCommand(CommandNames.GetDayRangeCommand, update);
+                        return;
                     default:
                         await ExecuteCommand(CommandNames.AddCategoryCreditCommand, update);
                         return;
@@ -38,6 +41,11 @@ namespace Creditot.Services
                 Console.WriteLine("/start");
                 await ExecuteCommand(CommandNames.StartCommand, update);
                 return;
+            }
+            if (update.Message is not null && double.TryParse(update.Message.Text,out var number)==true)
+            {
+                Console.WriteLine("FinishCommand");
+                await ExecuteCommand(CommandNames.FinishCreditCommand, update);
             }
             if (_lastCommand?.Name is null)                                    //Не забыть потом переписать, 
             {                                                                  //_lastCommand пустой

@@ -31,7 +31,7 @@ namespace Creditot.Services
                 for (int m = 0; m < categories.Count; m++)
                 {
                         keyboard.Add(
-                    InlineKeyboardButton.WithCallbackData(categories[m].Categories.Name, categories[m].Categories.Name)
+                    InlineKeyboardButton.WithCallbackData(categories[m].Categories.Name, categories[m].Id.ToString())
                           );
                 }
             }

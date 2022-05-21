@@ -52,7 +52,7 @@ namespace Creditot.Commands
                 string text = "Отлично! Категория добавлена,\n" +
                             " теперь Вы можете ее выбрать,\n" +
                             " нажав на кнопку \"Выбрать категорию\"";
-                _telegramBotClient.SendTextMessageAsync(user.ChatId, text, replyMarkup:inlineKeyboard);
+                await _telegramBotClient.SendTextMessageAsync(user.ChatId, text, replyMarkup:inlineKeyboard);
             }
         }
     }
