@@ -47,6 +47,10 @@ namespace Creditot.Commands
                     {
                     InlineKeyboardButton.WithCallbackData("Создать категорию", CommandNames.AddCategoryCommand),
                     InlineKeyboardButton.WithCallbackData("Выбрать категорию", CommandNames.GetCategoriesCommand)
+                    },
+                    new[]
+                    {
+                    InlineKeyboardButton.WithCallbackData("Получить статистику",CommandNames.GetDayRangeCommand)
                     }
                   });
                 string text = "Отлично! Категория добавлена,\n" +

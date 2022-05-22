@@ -2,6 +2,7 @@
 using Creditot.Services;
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace Creditot.Commands
 {
@@ -24,9 +25,22 @@ namespace Creditot.Commands
 
         public override async Task ExecuteAsync(Update update)
         {
-            Console.WriteLine("FinishHim");
             double credit = double.Parse(update.Message.Text);
             long chatId = update.Message.Chat.Id;
+
+            InlineKeyboardMarkup inlineKeyboard = new(
+            new[]
+  {
+                    new[]
+                    {
+                    InlineKeyboardButton.WithCallbackData("Создать категорию", CommandNames.AddCategoryCommand),
+                    InlineKeyboardButton.WithCallbackData("Выбрать категорию", CommandNames.GetCategoriesCommand)
+                    },
+                    new[]
+                    {
+                    InlineKeyboardButton.WithCallbackData("Получить статистику",CommandNames.GetDayRangeCommand)
+                    }
+             });
 
             var lastCredit =await  _operationService.GetLast(chatId);
             lastCredit.Sum = credit;
@@ -35,7 +49,7 @@ namespace Creditot.Commands
 
             string text = "Расход добавлен успешно";
 
-            await _telegramBotClient.SendTextMessageAsync(chatId, text);
+            await _telegramBotClient.SendTextMessageAsync(chatId, text,replyMarkup:inlineKeyboard);
         }
     }
 }

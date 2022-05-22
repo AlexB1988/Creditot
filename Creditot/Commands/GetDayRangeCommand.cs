@@ -1,9 +1,11 @@
 ﻿using Creditot.Domain;
+using Creditot.Domain.Entities;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace Creditot.Commands
 {
@@ -26,21 +28,48 @@ namespace Creditot.Commands
             string daysRangeString = update.CallbackQuery.Data;
             var data = daysRangeString.Split(":");
             int daysRange = int.Parse(data[0]);
-            Console.WriteLine("------1");
-            SqlParameter param1 = new("@chatId", chatId);
-            SqlParameter param2 = new("@daysRange", daysRange);
-            Console.WriteLine("------2");
-            var summaryCredits = _dataContext.FromSqlRaw("GetDateRange @chatId,@daysRange",param1,param2).ToList();
-            Console.WriteLine("------3");
-            Console.WriteLine(summaryCredits);
-            Console.WriteLine("-----4");
 
-            var message = new StringBuilder("Ваши расходы за день по категориям:\n");
-            //message.AppendLine(summaryCredits);
-            //foreach (var i in summaryCredits)
-            //{
-            //    message.AppendLine($"{i.}");
-            //}
+            InlineKeyboardMarkup inlineKeyboard = new(
+            new[]
+              {
+                    new[]
+                    {
+                    InlineKeyboardButton.WithCallbackData("Создать категорию", CommandNames.AddCategoryCommand),
+                    InlineKeyboardButton.WithCallbackData("Выбрать категорию", CommandNames.GetCategoriesCommand)
+                    },
+                    new[]
+                    {
+                    InlineKeyboardButton.WithCallbackData("Получить статистику",CommandNames.GetDayRangeCommand)
+                    }
+            });
+
+            var allCredits = from credits in _dataContext.Credits
+                             join userCategories in _dataContext.UsersCategories on credits.UsersCategoriesId equals userCategories.Id
+                             join categories in _dataContext.Categories on userCategories.CategoriesId equals categories.Id
+                             where credits.ChatId == chatId
+                             select new
+                             {
+                                 Name = categories.Name,
+                                 Sum = credits.Sum,
+                                 Chat = credits.ChatId
+                             };
+            var summaryCredits = allCredits.GroupBy(u => u.Name, u => u.Sum).Select(g => new
+            {
+                g.Key,
+                Sum = g.Sum()
+            });
+
+            double? summary = allCredits.Where(u => u.Chat == chatId).Sum(u => u.Sum);
+
+            var message = new StringBuilder("Ваши расходы по категориям:\n");
+            foreach (var i in summaryCredits)
+            {
+                message.AppendLine($"{i.Key}:\t{i.Sum}");
+            }
+            message.AppendLine($"Итого:\t\t{summary} ");
+
+
+            await _telegramBotClient.SendTextMessageAsync(chatId, message.ToString(),replyMarkup:inlineKeyboard);
         }
     }
 }

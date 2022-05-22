@@ -21,18 +21,21 @@ namespace Creditot.Services
             _userService = userService;
         }
 
-        public override List<InlineKeyboardButton> GetKeyboard(Users user)
+        public override List<InlineKeyboardButton[]> GetKeyboard(Users user)
         {
-            List<InlineKeyboardButton> keyboard =new List<InlineKeyboardButton>();
+            List<InlineKeyboardButton[]> keyboard =new List<InlineKeyboardButton[]>();
             var categories = _dataContext.UsersCategories.Include(p => p.Categories)
                 .Where(p=>p.UsersId==user.Id).ToList();
+            int i=categories.Count();
             if (categories is not null)
             {
                 for (int m = 0; m < categories.Count; m++)
                 {
                         keyboard.Add(
+                            new[]
+                            {
                     InlineKeyboardButton.WithCallbackData(categories[m].Categories.Name, categories[m].Id.ToString())
-                          );
+                            });
                 }
             }
             return keyboard;

@@ -7,6 +7,6 @@ namespace Creditot.Services
 {
     public abstract class KeyboardBase
     {
-        public abstract List<InlineKeyboardButton> GetKeyboard(Users user);
+        public abstract List<InlineKeyboardButton[]> GetKeyboard(Users user);
     }
 }

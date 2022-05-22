@@ -23,10 +23,9 @@ namespace Creditot.Commands
         {
             var user= await _userService.GetOrCreate(update); 
             InlineKeyboardMarkup inlineKeyboard = new(
-            new[]
-                {
+
                 _keyboard.GetKeyboard(user)        //Не забыть переделать, клавиатура горизонтальная (нужно вертикальную)
-                }) ;
+            ) ;
             string text = "Здесь Вы можете выбрать категорию\n" +
                           "своего расхода. Просто нажмите\n" +
                           " на подходящую из списка!";
