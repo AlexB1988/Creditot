@@ -33,7 +33,15 @@ namespace Creditot.Commands
                     },
                     new[]
                     {
-                    InlineKeyboardButton.WithCallbackData("Получить статистику",CommandNames.GetDayRangeCommand)
+                    InlineKeyboardButton.WithCallbackData("Получить статистику за день",CommandNames.GetDayRangeCommand)
+                    },
+                    new[]
+                    {
+                    InlineKeyboardButton.WithCallbackData("Получить статистику за неделю",CommandNames.GetWeekRangeCommand)
+                    },
+                    new[]
+                    {
+                    InlineKeyboardButton.WithCallbackData("Получить статистику за месяц",CommandNames.GetMonthRangeCommand)
                     }
                     }) ;
             string text = "Привет! С моей помошью ты сможешь вести \n" +

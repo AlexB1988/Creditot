@@ -27,7 +27,7 @@ namespace Creditot.Services
                     case CommandNames.GetCategoriesCommand:
                         await ExecuteCommand(CommandNames.GetCategoriesCommand, update);
                         return;
-                    case CommandNames.GetDayRangeCommand:
+                    case CommandNames.GetDayRangeCommand or CommandNames.GetWeekRangeCommand or CommandNames.GetMonthRangeCommand:
                         await ExecuteCommand(CommandNames.GetDayRangeCommand, update);
                         return;
                     default:

@@ -9,7 +9,7 @@
         public const string AddCategoryCreditCommand = "addCategoryCredit";
         public const string FinishCreditCommand = "finishCreditCommand";
         public const string GetDayRangeCommand = "0:getRange";
-        public const string GetWeekRange = "getWeekRange";
-        public const string GetMounthRange = "getMounthRange";
+        public const string GetWeekRangeCommand = "7:getRange";
+        public const string GetMonthRangeCommand = "30:getRange";
     }
 }

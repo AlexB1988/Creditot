@@ -41,8 +41,8 @@ namespace Creditot.Commands
                 await _dataContext.SaveChangesAsync();
 
                 InlineKeyboardMarkup inlineKeyboard = new(
-                new[]
-                  {
+                    new[]
+                      {
                     new[]
                     {
                     InlineKeyboardButton.WithCallbackData("Создать категорию", CommandNames.AddCategoryCommand),
@@ -50,9 +50,17 @@ namespace Creditot.Commands
                     },
                     new[]
                     {
-                    InlineKeyboardButton.WithCallbackData("Получить статистику",CommandNames.GetDayRangeCommand)
+                    InlineKeyboardButton.WithCallbackData("Получить статистику за день",CommandNames.GetDayRangeCommand)
+                    },
+                    new[]
+                    {
+                    InlineKeyboardButton.WithCallbackData("Получить статистику за неделю",CommandNames.GetWeekRangeCommand)
+                    },
+                    new[]
+                    {
+                    InlineKeyboardButton.WithCallbackData("Получить статистику за месяц",CommandNames.GetMonthRangeCommand)
                     }
-                  });
+                        });
                 string text = "Отлично! Категория добавлена,\n" +
                             " теперь Вы можете ее выбрать,\n" +
                             " нажав на кнопку \"Выбрать категорию\"";

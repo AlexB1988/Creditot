@@ -29,8 +29,8 @@ namespace Creditot.Commands
             long chatId = update.Message.Chat.Id;
 
             InlineKeyboardMarkup inlineKeyboard = new(
-            new[]
-  {
+                new[]
+                  {
                     new[]
                     {
                     InlineKeyboardButton.WithCallbackData("Создать категорию", CommandNames.AddCategoryCommand),
@@ -38,9 +38,17 @@ namespace Creditot.Commands
                     },
                     new[]
                     {
-                    InlineKeyboardButton.WithCallbackData("Получить статистику",CommandNames.GetDayRangeCommand)
+                    InlineKeyboardButton.WithCallbackData("Получить статистику за день",CommandNames.GetDayRangeCommand)
+                    },
+                    new[]
+                    {
+                    InlineKeyboardButton.WithCallbackData("Получить статистику за неделю",CommandNames.GetWeekRangeCommand)
+                    },
+                    new[]
+                    {
+                    InlineKeyboardButton.WithCallbackData("Получить статистику за месяц",CommandNames.GetMonthRangeCommand)
                     }
-             });
+                    });
 
             var lastCredit =await  _operationService.GetLast(chatId);
             lastCredit.Sum = credit;

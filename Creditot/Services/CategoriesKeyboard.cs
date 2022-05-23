@@ -26,7 +26,7 @@ namespace Creditot.Services
             List<InlineKeyboardButton[]> keyboard =new List<InlineKeyboardButton[]>();
             var categories = _dataContext.UsersCategories.Include(p => p.Categories)
                 .Where(p=>p.UsersId==user.Id).ToList();
-            int i=categories.Count();
+            //int i=categories.Count();
             if (categories is not null)
             {
                 for (int m = 0; m < categories.Count; m++)

@@ -30,8 +30,8 @@ namespace Creditot.Commands
             int daysRange = int.Parse(data[0]);
 
             InlineKeyboardMarkup inlineKeyboard = new(
-            new[]
-              {
+                new[]
+                  {
                     new[]
                     {
                     InlineKeyboardButton.WithCallbackData("Создать категорию", CommandNames.AddCategoryCommand),
@@ -39,14 +39,24 @@ namespace Creditot.Commands
                     },
                     new[]
                     {
-                    InlineKeyboardButton.WithCallbackData("Получить статистику",CommandNames.GetDayRangeCommand)
+                    InlineKeyboardButton.WithCallbackData("Получить статистику за день",CommandNames.GetDayRangeCommand)
+                    },
+                    new[]
+                    {
+                    InlineKeyboardButton.WithCallbackData("Получить статистику за неделю",CommandNames.GetWeekRangeCommand)
+                    },
+                    new[]
+                    {
+                    InlineKeyboardButton.WithCallbackData("Получить статистику за месяц",CommandNames.GetMonthRangeCommand)
                     }
-            });
+                    });
 
             var allCredits = from credits in _dataContext.Credits
                              join userCategories in _dataContext.UsersCategories on credits.UsersCategoriesId equals userCategories.Id
                              join categories in _dataContext.Categories on userCategories.CategoriesId equals categories.Id
                              where credits.ChatId == chatId
+                             where credits.CreatedAt < DateTime.UtcNow
+                             where credits.CreatedAt >= DateTime.UtcNow.AddDays(-daysRange)
                              select new
                              {
                                  Name = categories.Name,
