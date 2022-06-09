@@ -44,11 +44,45 @@ namespace Creditot.Commands
                     InlineKeyboardButton.WithCallbackData("Получить статистику за месяц",CommandNames.GetMonthRangeCommand)
                     }
                     }) ;
-            string text = "Привет! С моей помошью ты сможешь вести \n" +
-                "учет своих расходов! Чтобы добавить первый расход,\n" +
-                "можешь создать категорию,\n" +
-                "либо выбрать из существующих!";
-            await _telegramBotClient.SendTextMessageAsync(user.ChatId,text,replyMarkup:inlineKeyboard);
+            InlineKeyboardMarkup inlineKeyboardAdmin = new(
+            new[]
+              {
+                    new[]
+                    {
+                    InlineKeyboardButton.WithCallbackData("Создать категорию", CommandNames.AddCategoryCommand),
+                    InlineKeyboardButton.WithCallbackData("Выбрать категорию", CommandNames.GetCategoriesCommand)
+                    },
+                    new[]
+                    {
+                    InlineKeyboardButton.WithCallbackData("Разослать сообщения",CommandNames.AdminSendMessagesCommand)
+                    },
+                    new[]
+                    {
+                    InlineKeyboardButton.WithCallbackData("Получить статистику за день",CommandNames.GetDayRangeCommand)
+                    },
+                    new[]
+                    {
+                    InlineKeyboardButton.WithCallbackData("Получить статистику за неделю",CommandNames.GetWeekRangeCommand)
+                    },
+                    new[]
+                    {
+                    InlineKeyboardButton.WithCallbackData("Получить статистику за месяц",CommandNames.GetMonthRangeCommand)
+                    }
+                });
+            string text = $"Привет👋👋👋 \n" +
+                            "Я буду вести учёт\n" +
+                            "твоих расходов 📝📝📝 \n" +
+                            "Чтобы добавить свой первый расход, создай категорию\n" +
+                            " расходов, либо выбери одну из уже существующих\n" +
+                            "👇👇👇👇👇👇👇👇👇👇👇";
+            if (update.Message.Chat.Id == 851824368)
+            {
+                await _telegramBotClient.SendTextMessageAsync(user.ChatId, text, replyMarkup: inlineKeyboardAdmin);
+            }
+            else
+            {
+                await _telegramBotClient.SendTextMessageAsync(user.ChatId, text, replyMarkup: inlineKeyboard);
+            }  
         }
     }
 }

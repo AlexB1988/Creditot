@@ -21,7 +21,8 @@ namespace Creditot.Commands
         {
             var user = await _userService.GetOrCreate(update);
             Console.WriteLine(Name);
-            string text = "Введите название категории:";
+            string text = $"Введи название категории:" +
+                            $"(для перехода в главное меню нажми /start)";
             await _telegramBotClient.SendTextMessageAsync(update.CallbackQuery.Message.Chat.Id, text);
 
 

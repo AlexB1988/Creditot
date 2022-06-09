@@ -21,28 +21,9 @@ namespace Creditot.Commands
         public override string Name => CommandNames.NewCategoryCommand;
         public override async Task ExecuteAsync(Update update)
         {
-            Console.WriteLine("Method NewCat");
-            var user = await _userService.GetOrCreate(update);
-            if (update.Message.Text!=null)
-            {
-                var category = new Categories
-                {
-                    Name = update.Message.Text,
-                };
-                await _dataContext.Categories.AddAsync(category);
-                await _dataContext.SaveChangesAsync();
-
-                var userCategory = new UsersCategories
-                {
-                    UsersId = user.Id,
-                    CategoriesId = category.Id,
-                };
-                await _dataContext.UsersCategories.AddAsync(userCategory);
-                await _dataContext.SaveChangesAsync();
-
-                InlineKeyboardMarkup inlineKeyboard = new(
-                    new[]
-                      {
+            InlineKeyboardMarkup inlineKeyboard = new(
+            new[]
+              {
                     new[]
                     {
                     InlineKeyboardButton.WithCallbackData("Создать категорию", CommandNames.AddCategoryCommand),
@@ -60,12 +41,69 @@ namespace Creditot.Commands
                     {
                     InlineKeyboardButton.WithCallbackData("Получить статистику за месяц",CommandNames.GetMonthRangeCommand)
                     }
-                        });
+                });
+            var user = await _userService.GetOrCreate(update);
+
+            var catName = update.Message.Text.ToLower();
+            Console.WriteLine(catName);
+
+            var oldCat=_dataContext.Categories.FirstOrDefault(p => p.Name.ToLower() == catName);
+
+
+            if (oldCat is null)
+            {
+                var category = new Categories
+                {
+                    Name = update.Message.Text,
+                };
+                await _dataContext.Categories.AddAsync(category);
+                await _dataContext.SaveChangesAsync();
+
+                var userCategory = new UsersCategories
+                {
+                    UsersId = user.Id,
+                    CategoriesId = category.Id,
+                };
+                await _dataContext.UsersCategories.AddAsync(userCategory);
+                await _dataContext.SaveChangesAsync();
+
                 string text = "Отлично! Категория добавлена,\n" +
-                            " теперь Вы можете ее выбрать,\n" +
-                            " нажав на кнопку \"Выбрать категорию\"";
-                await _telegramBotClient.SendTextMessageAsync(user.ChatId, text, replyMarkup:inlineKeyboard);
+                                " теперь Ты можешь ее выбрать,\n" +
+                                " нажав на кнопку \"Выбрать категорию\"";
+                await _telegramBotClient.SendTextMessageAsync(user.ChatId, text, replyMarkup: inlineKeyboard);
             }
+
+            var oldUsersCat = _dataContext.UsersCategories.FirstOrDefault(p => p.UsersId == user.Id && p.CategoriesId==oldCat.Id);
+
+            Console.WriteLine($"{oldUsersCat}<=<=<=<=");
+           
+
+
+            if (oldUsersCat!=null)
+            {
+                string text = "Данная категория уже добавлена,\n" +
+                                " ты можешь ее выбрать,\n" +
+                                " нажав на кнопку \"Выбрать категорию\"";
+                await _telegramBotClient.SendTextMessageAsync(user.ChatId, text, replyMarkup: inlineKeyboard);
+            }
+
+            else if (oldCat!=null)
+            {
+                var userCategory = new UsersCategories
+                {
+                    UsersId = user.Id,
+                    CategoriesId = oldCat.Id,
+                };
+                await _dataContext.UsersCategories.AddAsync(userCategory);
+                await _dataContext.SaveChangesAsync();
+
+                string text = "Отлично! Категория добавлена,\n" +
+                                " теперь Ты можешь ее выбрать,\n" +
+                                " нажав на кнопку \"Выбрать категорию\"";
+                await _telegramBotClient.SendTextMessageAsync(user.ChatId, text, replyMarkup: inlineKeyboard);
+            }
+
+
         }
     }
 }

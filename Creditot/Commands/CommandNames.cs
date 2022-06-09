@@ -8,8 +8,11 @@
         public const string NewCategoryCommand = "newCategory";
         public const string AddCategoryCreditCommand = "addCategoryCredit";
         public const string FinishCreditCommand = "finishCreditCommand";
-        public const string GetDayRangeCommand = "0:getRange";
+        public const string GetDayRangeCommand = "1:getRange";
         public const string GetWeekRangeCommand = "7:getRange";
         public const string GetMonthRangeCommand = "30:getRange";
+        public const string PostToAllUrersCommand = "/post";
+        public const string AdminSendMessagesCommand = "adminSendMessage";
+        public const string MailingListCommand = "mailingList";
     }
 }

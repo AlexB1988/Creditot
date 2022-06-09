@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
-//IServiceProvider serviceProvider=null;
 
 // Add services to the container.
 
@@ -19,7 +18,7 @@ string connection = builder.Configuration.GetConnectionString("Db");
 builder.Services.AddDbContext<DataContext>(options=>options.UseSqlServer(connection));
 builder.Services.AddSingleton<TelegramBot>();
 builder.Services.AddScoped<ICommandExecutor, CommandExecutor>();
-builder.Services.AddScoped<IUserService,UserService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IOperationService,OperationService>();
 builder.Services.AddScoped<BaseCommand, StartCommand>();
 builder.Services.AddScoped<BaseCommand, GetCategoriesCommand>();
@@ -29,6 +28,8 @@ builder.Services.AddScoped<BaseCommand, NewCategoryCommand>();
 builder.Services.AddScoped<BaseCommand, AddCategoryCreditCommand>();
 builder.Services.AddScoped<BaseCommand, FinishCreditCommand>();
 builder.Services.AddScoped<BaseCommand, GetDayRangeCommand>();
+builder.Services.AddScoped<BaseCommand, AdminSendMessagesCommand>();
+builder.Services.AddScoped<BaseCommand, MailingListCommand>();
 
 var app = builder.Build();
 

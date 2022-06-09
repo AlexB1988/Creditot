@@ -10,7 +10,7 @@ namespace Creditot.Controllers
 {
     [ApiController]
     [Route("api/message/update")]
-    public class TelegramBotController:Controller
+    public class TelegramBotController:ControllerBase
     {
         private readonly ICommandExecutor _commandExecutor;
         public TelegramBotController(ICommandExecutor commandExecutor)
@@ -22,7 +22,6 @@ namespace Creditot.Controllers
         public async Task<IActionResult> Update([FromBody] object update)
         //public async Task<IActionResult> Update(Update update)
         {
-            Console.WriteLine("OOOOPPPPssss");
             var upd = JsonConvert.DeserializeObject<Update>(update.ToString());
 
             if (upd?.Message?.Text is null && upd?.CallbackQuery is null)

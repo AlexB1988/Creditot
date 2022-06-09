@@ -36,6 +36,18 @@ namespace Creditot.Services
             var result = await _dataContext.Users.AddAsync(user);
             await _dataContext.SaveChangesAsync();
 
+            var defaultCategories = _dataContext.Categories.Where(x => x.IsDefault == true).ToList();
+
+            foreach (var i in defaultCategories)
+            {
+                var defaultUsersCategories = new UsersCategories
+                {
+                    UsersId = user.Id,
+                    CategoriesId = i.Id
+                };
+                await _dataContext.UsersCategories.AddAsync(defaultUsersCategories);
+                await _dataContext.SaveChangesAsync();
+            }
             return result.Entity;
         }
     }

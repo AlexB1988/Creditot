@@ -26,9 +26,10 @@ namespace Creditot.Commands
 
                 _keyboard.GetKeyboard(user)        //Не забыть переделать, клавиатура горизонтальная (нужно вертикальную)
             ) ;
-            string text = "Здесь Вы можете выбрать категорию\n" +
-                          "своего расхода. Просто нажмите\n" +
-                          " на подходящую из списка!";
+            string text = "Здесь Ты можешь выбрать категорию\n" +
+                          "своего расхода. Просто нажми\n" +
+                          " на подходящую из списка!\n" +
+                          "(для перехода в главное меню нажми /start)";
             await _telegramBotClient.SendTextMessageAsync(user.ChatId,text, replyMarkup: inlineKeyboard);
         }
     }

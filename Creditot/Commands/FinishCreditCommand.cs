@@ -55,7 +55,11 @@ namespace Creditot.Commands
 
             await _dataContext.SaveChangesAsync();
 
-            string text = "Расход добавлен успешно";
+            string text = "Расход успешно добавлен❕❕❕\n" +
+                            "Ты можешь посмотреть\n" +
+                            "📊статистику 📊\n" +
+                            "своих расходов, нажав на одну\n" +
+                            "из кнопок🕹🕹🕹 ниже";
 
             await _telegramBotClient.SendTextMessageAsync(chatId, text,replyMarkup:inlineKeyboard);
         }

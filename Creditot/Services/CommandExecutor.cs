@@ -17,11 +17,13 @@ namespace Creditot.Services
         {
             if (update.Type==UpdateType.CallbackQuery)
             {
-                Console.WriteLine("Callback");
                 switch (update.CallbackQuery.Data)
                 {
                     case CommandNames.AddCategoryCommand:
                         await ExecuteCommand(CommandNames.AddCategoryCommand, update);
+                        return;
+                    case CommandNames.AdminSendMessagesCommand:
+                        await ExecuteCommand(CommandNames.AdminSendMessagesCommand, update);
                         return;
 
                     case CommandNames.GetCategoriesCommand:
@@ -38,18 +40,23 @@ namespace Creditot.Services
 
             if (update.Message is not null && update.Message.Text.Contains(CommandNames.StartCommand))
             {
-                Console.WriteLine("/start");
                 await ExecuteCommand(CommandNames.StartCommand, update);
                 return;
             }
-            if (update.Message is not null && double.TryParse(update.Message.Text,out var number)==true)
+            
+
+
+            if (update.Message is not null && Convert.ToString(update.Message.Text).Length>50)
             {
-                Console.WriteLine("FinishCommand");
+                await ExecuteCommand(CommandNames.MailingListCommand, update);
+            }
+            else if (update.Message is not null && double.TryParse(update.Message.Text, out var number) == true)
+            {
                 await ExecuteCommand(CommandNames.FinishCreditCommand, update);
             }
-            if (_lastCommand?.Name is null)                                    //Не забыть потом переписать, 
+
+            else if (update.Message is not null)                                    //Не забыть потом переписать, 
             {                                                                  //_lastCommand пустой
-                Console.WriteLine("NewCategory");
                 await ExecuteCommand(CommandNames.NewCategoryCommand, update);
             }
             //switch (_lastCommand?.Name)

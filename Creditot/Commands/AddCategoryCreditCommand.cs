@@ -24,7 +24,8 @@ namespace Creditot.Commands
             int i = Convert.ToInt32(update.CallbackQuery.Data);
 
             var categories = _dataContext.UsersCategories.FirstOrDefault(x => x.Id == i);
-            var categoryName = _dataContext.Categories.FirstOrDefault(x => x.Id == categories.Id);
+            Console.WriteLine($"==={categories.Id}====");
+            var categoryName = _dataContext.Categories.FirstOrDefault(x => x.Id == categories.CategoriesId);
 
             var credit =new Credits
                 { 
@@ -34,7 +35,8 @@ namespace Creditot.Commands
             await _dataContext.Credits.AddAsync(credit);
             await _dataContext.SaveChangesAsync();
             string text = $"Введите сумму расхода для категории \"{categoryName.Name}\" \n" +
-                          $"Вводите только цифры!";
+                          $"Вводите только цифры!" +
+                          $"(для перехода в главное меню нажми /start)";
 
             await _telegramBotClient.SendTextMessageAsync(update.CallbackQuery.Message.Chat.Id, text);
         }
