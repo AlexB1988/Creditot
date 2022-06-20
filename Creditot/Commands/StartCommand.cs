@@ -28,20 +28,24 @@ namespace Creditot.Commands
                   {
                     new[]
                     {
-                    InlineKeyboardButton.WithCallbackData("Создать категорию", CommandNames.AddCategoryCommand),
-                    InlineKeyboardButton.WithCallbackData("Выбрать категорию", CommandNames.GetCategoriesCommand)
+                    InlineKeyboardButton.WithCallbackData("Создать категорию ✅", CommandNames.AddCategoryCommand),
+                    InlineKeyboardButton.WithCallbackData("Выбрать категорию 🕹", CommandNames.GetCategoriesCommand)
                     },
                     new[]
                     {
-                    InlineKeyboardButton.WithCallbackData("Получить статистику за день",CommandNames.GetDayRangeCommand)
+                    InlineKeyboardButton.WithCallbackData("Получить статистику за день 📊",CommandNames.GetDayRangeCommand)
                     },
                     new[]
                     {
-                    InlineKeyboardButton.WithCallbackData("Получить статистику за неделю",CommandNames.GetWeekRangeCommand)
+                    InlineKeyboardButton.WithCallbackData("Получить статистику за неделю 📊",CommandNames.GetWeekRangeCommand)
                     },
                     new[]
                     {
-                    InlineKeyboardButton.WithCallbackData("Получить статистику за месяц",CommandNames.GetMonthRangeCommand)
+                    InlineKeyboardButton.WithCallbackData("Получить статистику за месяц 📊",CommandNames.GetMonthRangeCommand)
+                    },
+                    new[]
+                    {
+                    InlineKeyboardButton.WithCallbackData("Обратиться в поддержку 📞",CommandNames.SupportCommand)
                     }
                     }) ;
             InlineKeyboardMarkup inlineKeyboardAdmin = new(
@@ -49,8 +53,8 @@ namespace Creditot.Commands
               {
                     new[]
                     {
-                    InlineKeyboardButton.WithCallbackData("Создать категорию", CommandNames.AddCategoryCommand),
-                    InlineKeyboardButton.WithCallbackData("Выбрать категорию", CommandNames.GetCategoriesCommand)
+                    InlineKeyboardButton.WithCallbackData("Создать категорию ✅", CommandNames.AddCategoryCommand),
+                    InlineKeyboardButton.WithCallbackData("Выбрать категорию  🕹", CommandNames.GetCategoriesCommand)
                     },
                     new[]
                     {
@@ -58,20 +62,22 @@ namespace Creditot.Commands
                     },
                     new[]
                     {
-                    InlineKeyboardButton.WithCallbackData("Получить статистику за день",CommandNames.GetDayRangeCommand)
+                    InlineKeyboardButton.WithCallbackData("Получить статистику за день 📊",CommandNames.GetDayRangeCommand)
                     },
                     new[]
                     {
-                    InlineKeyboardButton.WithCallbackData("Получить статистику за неделю",CommandNames.GetWeekRangeCommand)
+                    InlineKeyboardButton.WithCallbackData("Получить статистику за неделю 📊",CommandNames.GetWeekRangeCommand)
                     },
                     new[]
                     {
-                    InlineKeyboardButton.WithCallbackData("Получить статистику за месяц",CommandNames.GetMonthRangeCommand)
+                    InlineKeyboardButton.WithCallbackData("Получить статистику за месяц 📊",CommandNames.GetMonthRangeCommand)
                     }
                 });
             string text = $"Привет👋👋👋 \n" +
                             "Я буду вести учёт\n" +
                             "твоих расходов 📝📝📝 \n" +
+                            "по всем вопросам и предложениям " +
+                            "обращайтесь к @alexsnake999\n"+
                             "Чтобы добавить свой первый расход, создай категорию\n" +
                             " расходов, либо выбери одну из уже существующих\n" +
                             "👇👇👇👇👇👇👇👇👇👇👇";

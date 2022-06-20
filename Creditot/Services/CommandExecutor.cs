@@ -32,6 +32,9 @@ namespace Creditot.Services
                     case CommandNames.GetDayRangeCommand or CommandNames.GetWeekRangeCommand or CommandNames.GetMonthRangeCommand:
                         await ExecuteCommand(CommandNames.GetDayRangeCommand, update);
                         return;
+                    case CommandNames.SupportCommand:
+                        await ExecuteCommand(CommandNames.SupportCommand, update);
+                        return;
                     default:
                         await ExecuteCommand(CommandNames.AddCategoryCreditCommand, update);
                         return;

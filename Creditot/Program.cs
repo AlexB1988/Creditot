@@ -30,6 +30,7 @@ builder.Services.AddScoped<BaseCommand, FinishCreditCommand>();
 builder.Services.AddScoped<BaseCommand, GetDayRangeCommand>();
 builder.Services.AddScoped<BaseCommand, AdminSendMessagesCommand>();
 builder.Services.AddScoped<BaseCommand, MailingListCommand>();
+builder.Services.AddScoped<BaseCommand, SupportCommand>();
 
 var app = builder.Build();
 

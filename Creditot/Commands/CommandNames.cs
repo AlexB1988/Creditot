@@ -14,5 +14,6 @@
         public const string PostToAllUrersCommand = "/post";
         public const string AdminSendMessagesCommand = "adminSendMessage";
         public const string MailingListCommand = "mailingList";
+        public const string SupportCommand = "support";
     }
 }

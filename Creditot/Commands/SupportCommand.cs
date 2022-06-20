@@ -1,32 +1,23 @@
-﻿using Creditot.Domain;
-using Creditot.Services;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace Creditot.Commands
 {
-    public class FinishCreditCommand:BaseCommand
+    public class SupportCommand:BaseCommand
     {
-        private readonly IUserService _userService;
-        private readonly DataContext _dataContext;
         private readonly TelegramBotClient _telegramBotClient;
-        private readonly IOperationService _operationService;
 
-        public FinishCreditCommand(IOperationService operationService,IUserService userService,DataContext dataContext, TelegramBot telegramBot)
+        public SupportCommand(TelegramBot telegramBot)
         {
-            _operationService = operationService;
-            _dataContext = dataContext;
-            _userService = userService;
             _telegramBotClient = telegramBot.GetBot().Result;
         }
 
-        public override string Name => CommandNames.FinishCreditCommand;
+        public override string Name => CommandNames.SupportCommand;
+
 
         public override async Task ExecuteAsync(Update update)
         {
-            double credit = double.Parse(update.Message.Text);
-            long chatId = update.Message.Chat.Id;
 
             InlineKeyboardMarkup inlineKeyboard = new(
                 new[]
@@ -52,20 +43,15 @@ namespace Creditot.Commands
                     {
                     InlineKeyboardButton.WithCallbackData("Обратиться в поддержку 📞",CommandNames.SupportCommand)
                     }
-                    });
+                 });
 
-            var lastCredit =await  _operationService.GetLast(chatId);
-            lastCredit.Sum = credit;
+            string message = $"По всем вопросам, проблемам\n" +
+                               $" и обращениям пишите @alexsnake999";
 
-            await _dataContext.SaveChangesAsync();
+            long chatId = update.CallbackQuery.Message.Chat.Id;
 
-            string text = "Расход успешно добавлен❕❕❕\n" +
-                            "Ты можешь посмотреть\n" +
-                            "📊статистику 📊\n" +
-                            "своих расходов, нажав на одну\n" +
-                            "из кнопок🕹🕹🕹 ниже";
-
-            await _telegramBotClient.SendTextMessageAsync(chatId, text,replyMarkup:inlineKeyboard);
+            await _telegramBotClient.SendTextMessageAsync(chatId,message,replyMarkup:inlineKeyboard);
         }
+
     }
 }
