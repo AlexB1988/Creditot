@@ -45,6 +45,10 @@ namespace Creditot.Commands
                     },
                     new[]
                     {
+                    InlineKeyboardButton.WithCallbackData("Удалить статистику ❌❌❌",CommandNames.DeleteStaticticsCommand)
+                    },
+                    new[]
+                    {
                     InlineKeyboardButton.WithCallbackData("Обратиться в поддержку 📞",CommandNames.SupportCommand)
                     }
                     }) ;
@@ -77,7 +81,10 @@ namespace Creditot.Commands
                             "Я буду вести учёт\n" +
                             "твоих расходов 📝📝📝 \n" +
                             "по всем вопросам и предложениям " +
-                            "обращайтесь к @alexsnake999\n"+
+                            "обращайтесь к @alexsnake999\n" +
+                            "Также следите за обновлениями и\n" +
+                            "оставляйте комментарии на канале\n" +
+                            "https://t.me/creditbotchannel \n" +
                             "Чтобы добавить свой первый расход, создай категорию\n" +
                             " расходов, либо выбери одну из уже существующих\n" +
                             "👇👇👇👇👇👇👇👇👇👇👇";

@@ -51,14 +51,20 @@ namespace Creditot.Commands
                     },
                     new[]
                     {
+                    InlineKeyboardButton.WithCallbackData("Удалить статистику ❌❌❌",CommandNames.DeleteStaticticsCommand)
+                    },
+                    new[]
+                    {
                     InlineKeyboardButton.WithCallbackData("Обратиться в поддержку 📞",CommandNames.SupportCommand)
-                    }
+                    },
+
                     });
 
             var allCredits = from credits in _dataContext.Credits
                              join userCategories in _dataContext.UsersCategories on credits.UsersCategoriesId equals userCategories.Id
                              join categories in _dataContext.Categories on userCategories.CategoriesId equals categories.Id
                              where credits.ChatId == chatId
+                             where credits.IsDeleted==false
                              where credits.CreatedAt < DateTime.UtcNow
                              where credits.CreatedAt >= DateTime.UtcNow.AddDays(-daysRange)
                              select new

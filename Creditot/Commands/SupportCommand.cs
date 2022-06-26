@@ -41,6 +41,10 @@ namespace Creditot.Commands
                     },
                     new[]
                     {
+                    InlineKeyboardButton.WithCallbackData("Удалить статистику ❌❌❌",CommandNames.DeleteStaticticsCommand)
+                    },
+                    new[]
+                    {
                     InlineKeyboardButton.WithCallbackData("Обратиться в поддержку 📞",CommandNames.SupportCommand)
                     }
                  });

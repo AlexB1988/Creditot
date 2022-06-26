@@ -31,6 +31,7 @@ builder.Services.AddScoped<BaseCommand, GetDayRangeCommand>();
 builder.Services.AddScoped<BaseCommand, AdminSendMessagesCommand>();
 builder.Services.AddScoped<BaseCommand, MailingListCommand>();
 builder.Services.AddScoped<BaseCommand, SupportCommand>();
+builder.Services.AddScoped<BaseCommand, DeleteStaticticsCommand>();
 
 var app = builder.Build();
 

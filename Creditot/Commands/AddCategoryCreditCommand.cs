@@ -35,8 +35,8 @@ namespace Creditot.Commands
             await _dataContext.Credits.AddAsync(credit);
             await _dataContext.SaveChangesAsync();
             string text = $"Введите сумму расхода для категории \"{categoryName.Name}\" \n" +
-                          $"Вводите только цифры!" +
-                          $"(для перехода в главное меню нажми /start)";
+                          $"❗️ Вводите только цифры ❗️\n" +
+                          $"(для перехода в главное меню нажмите /start)";
 
             await _telegramBotClient.SendTextMessageAsync(update.CallbackQuery.Message.Chat.Id, text);
         }

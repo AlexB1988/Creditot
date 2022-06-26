@@ -21,7 +21,10 @@ namespace Creditot.Commands
             var chatIdAdmin = update.Message.Chat.Id;
             var chatId = _dataContext.Users.ToList();
 
-            string text =update.Message.Text;
+            string textTemp =update.Message.Text;
+            string text = $"{textTemp}\n " +
+                         $" Для перехода в главное меню нажмите\n" +
+                         $"👉👉👉 /start 👈👈👈";
 
             if (chatIdAdmin == 851824368)
             {

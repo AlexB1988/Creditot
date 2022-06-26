@@ -35,6 +35,9 @@ namespace Creditot.Services
                     case CommandNames.SupportCommand:
                         await ExecuteCommand(CommandNames.SupportCommand, update);
                         return;
+                    case CommandNames.DeleteStaticticsCommand:
+                        await ExecuteCommand(CommandNames.DeleteStaticticsCommand, update);
+                        return;
                     default:
                         await ExecuteCommand(CommandNames.AddCategoryCreditCommand, update);
                         return;

@@ -13,6 +13,7 @@ namespace Creditot.Domain.Entities
         public long UsersCategoriesId { get; set; }
         public double? Sum { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public bool IsDeleted { get; set; } = false;
         public UsersCategories? UsersCategories { get; set; }
     }
 }

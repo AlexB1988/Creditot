@@ -15,5 +15,6 @@
         public const string AdminSendMessagesCommand = "adminSendMessage";
         public const string MailingListCommand = "mailingList";
         public const string SupportCommand = "support";
+        public const string DeleteStaticticsCommand = "deleteStatistics";
     }
 }
