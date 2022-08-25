@@ -13,10 +13,25 @@ namespace Creditot.Services
         {
             _commands = serviceProvider.GetServices<BaseCommand>().ToList();
         }
+
+
+
         public async Task Execute(Update update)
         {
+
             if (update.Type==UpdateType.CallbackQuery)
             {
+                //switch (_lastCommand?.Name)
+                //{
+                //    case CommandNames.AdminSendMessagesCommand:
+                //        {
+                //            Console.WriteLine("FSM");
+                //            await ExecuteCommand(CommandNames.MailingListCommand, update);
+                //            break;
+                //        }
+                //}
+
+
                 switch (update.CallbackQuery.Data)
                 {
                     case CommandNames.AddCategoryCommand:
@@ -25,7 +40,6 @@ namespace Creditot.Services
                     case CommandNames.AdminSendMessagesCommand:
                         await ExecuteCommand(CommandNames.AdminSendMessagesCommand, update);
                         return;
-
                     case CommandNames.GetCategoriesCommand:
                         await ExecuteCommand(CommandNames.GetCategoriesCommand, update);
                         return;
@@ -49,10 +63,10 @@ namespace Creditot.Services
                 await ExecuteCommand(CommandNames.StartCommand, update);
                 return;
             }
-            
 
 
-            if (update.Message is not null && Convert.ToString(update.Message.Text).Length>50)
+
+            if (update.Message is not null && Convert.ToString(update.Message.Text).Length > 50)
             {
                 await ExecuteCommand(CommandNames.MailingListCommand, update);
             }

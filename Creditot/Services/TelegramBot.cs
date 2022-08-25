@@ -21,7 +21,7 @@ namespace Creditot
             {
                 return _telegramBotClient;
             }
-            _telegramBotClient = new TelegramBotClient(_configuration["TOKEN"]);
+            _telegramBotClient = new TelegramBotClient(_configuration["TOKEN2"]);
 
             var hook = $"{_configuration["Url"]}/api/message/update";
 

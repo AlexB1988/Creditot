@@ -2,8 +2,9 @@ using Creditot;
 using Creditot.Commands;
 using Creditot.Domain;
 using Creditot.Services;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
-
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,24 +15,29 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-string connection = builder.Configuration.GetConnectionString("Db");
-builder.Services.AddDbContext<DataContext>(options=>options.UseSqlServer(connection));
+string connection = builder.Configuration.GetConnectionString("Db3");
+builder.Services.AddDbContext<DataContext>(options=>options.UseNpgsql(connection),ServiceLifetime.Singleton);
 builder.Services.AddSingleton<TelegramBot>();
-builder.Services.AddScoped<ICommandExecutor, CommandExecutor>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IOperationService,OperationService>();
-builder.Services.AddScoped<BaseCommand, StartCommand>();
-builder.Services.AddScoped<BaseCommand, GetCategoriesCommand>();
-builder.Services.AddScoped<KeyboardBase, CategoriesKeyboard>();
-builder.Services.AddScoped<BaseCommand, AddCategoryCommand>();
-builder.Services.AddScoped<BaseCommand, NewCategoryCommand>();
-builder.Services.AddScoped<BaseCommand, AddCategoryCreditCommand>();
-builder.Services.AddScoped<BaseCommand, FinishCreditCommand>();
-builder.Services.AddScoped<BaseCommand, GetDayRangeCommand>();
-builder.Services.AddScoped<BaseCommand, AdminSendMessagesCommand>();
-builder.Services.AddScoped<BaseCommand, MailingListCommand>();
-builder.Services.AddScoped<BaseCommand, SupportCommand>();
-builder.Services.AddScoped<BaseCommand, DeleteStaticticsCommand>();
+builder.Services.AddSingleton<ICommandExecutor, CommandExecutor>();
+builder.Services.AddSingleton<IUserService, UserService>();
+builder.Services.AddSingleton<IOperationService,OperationService>();
+builder.Services.AddSingleton<BaseCommand, StartCommand>();
+builder.Services.AddSingleton<BaseCommand, GetCategoriesCommand>();
+builder.Services.AddSingleton<KeyboardBase, CategoriesKeyboard>();
+builder.Services.AddSingleton<BaseCommand, AddCategoryCommand>();
+builder.Services.AddSingleton<BaseCommand, NewCategoryCommand>();
+builder.Services.AddSingleton<BaseCommand, AddCategoryCreditCommand>();
+builder.Services.AddSingleton<BaseCommand, FinishCreditCommand>();
+builder.Services.AddSingleton<BaseCommand, GetDayRangeCommand>();
+builder.Services.AddSingleton<BaseCommand, AdminSendMessagesCommand>();
+builder.Services.AddSingleton<BaseCommand, MailingListCommand>();
+builder.Services.AddSingleton<BaseCommand, SupportCommand>();
+builder.Services.AddSingleton<BaseCommand, DeleteStaticticsCommand>();
+
+//builder.Services.Configure<ForwardedHeadersOptions>(options =>
+//{
+//    options.KnownProxies.Add(IPAddress.Parse("127.0.0.1"));
+//});
 
 var app = builder.Build();
 
@@ -42,6 +48,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 //serviceProvider.GetRequiredService<TelegramBot>().GetBot().Wait();
+//app.UseForwardedHeaders(new ForwardedHeadersOptions
+//{
+//    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+//});
+
+
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseRouting();
 
 app.UseHttpsRedirection();
